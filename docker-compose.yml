@@ -1,0 +1,31 @@
+name: betabi-site
+
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: betabi-site-dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - betabi_site_node_modules:/app/node_modules
+    environment:
+      - VITE_DEFAULT_TEMPLATE=${BETABI_TEMPLATE:-micro-isp}
+      - VITE_DEFAULT_LANG=${BETABI_LANG:-it}
+      - VITE_DEFAULT_MOBILE_LAYOUT=${BETABI_MOBILE_LAYOUT:-standard}
+      - VITE_DEFAULT_COLOR_THEME=${BETABI_COLOR_THEME:-neon}
+
+  prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: betabi-site-prod
+    ports:
+      - "8080:80"
+    profiles:
+      - prod
+
+volumes:
+  betabi_site_node_modules:

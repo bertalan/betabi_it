@@ -1,0 +1,722 @@
+@import "tailwindcss";
+
+/* ============================================================
+   THEME SYSTEM
+   Color themes applied via CSS class on <html> by SiteConfigContext
+   ============================================================ */
+
+:root {
+  --theme-accent: #ccff00;
+  --theme-accent-rgb: 204, 255, 0;
+}
+
+:root.theme-neon {
+  --theme-accent: #ccff00;
+  --theme-accent-rgb: 204, 255, 0;
+}
+
+:root.theme-blue {
+  --theme-accent: #4CA2FF;
+  --theme-accent-rgb: 76, 162, 255;
+}
+
+:root.theme-red {
+  --theme-accent: #FF3300;
+  --theme-accent-rgb: 255, 51, 0;
+}
+
+/* ============================================================
+   HIGH CONTRAST (A11Y)
+   Applied via .high-contrast on <html> by SiteConfigContext
+   ============================================================ */
+
+:root.high-contrast {
+  --color-bg: #000000;
+  --color-surface: #1a1a1a;
+  --color-text: #FFFFFF;
+  --color-muted: #AAAAAA;
+}
+
+:root.high-contrast * {
+  border-color: rgba(255, 255, 255, 0.35) !important;
+}
+
+:root.high-contrast .text-gray-400,
+:root.high-contrast .text-gray-500 {
+  color: #cccccc !important;
+}
+
+:root.high-contrast img {
+  filter: contrast(1.1);
+}
+
+@media (forced-colors: active) {
+  :root {
+    --color-bg: Canvas;
+    --color-text: CanvasText;
+    --color-accent: LinkText;
+  }
+}
+
+/* ============================================================
+   TAILWIND THEME TOKENS
+   ============================================================ */
+
+@theme {
+  /* Fonts — agency template */
+  --font-sans: "Epilogue", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Archivo Black", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Newsreader", ui-serif, Georgia, serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  /* Colors — shared semantic tokens */
+  --color-bg: #050505;
+  --color-surface: #111111;
+  --color-text: #E8E8E8;
+  --color-muted: #999999;
+  --color-accent: var(--theme-accent);
+}
+
+/* ============================================================
+   BASE STYLES
+   ============================================================ */
+
+@layer base {
+  body {
+    @apply bg-bg text-text font-sans antialiased selection:bg-accent selection:text-bg;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display uppercase tracking-tighter;
+  }
+
+  /* Micro-ISP template body override */
+  .tpl-micro-isp body,
+  :root.tpl-micro-isp body {
+    font-family: var(--font-mono);
+  }
+}
+
+/* ============================================================
+   NOISE OVERLAYS (both templates use slightly different versions)
+   ============================================================ */
+
+.noise-overlay,
+.noise {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.noise-overlay {
+  z-index: 9999;
+}
+
+/* ============================================================
+   CUSTOM CURSOR (Agency template)
+   ============================================================ */
+
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  background-color: var(--color-accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+              height 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+              background-color 0.3s ease;
+  mix-blend-mode: difference;
+}
+
+.custom-cursor.hovering {
+  width: 80px;
+  height: 80px;
+  background-color: #ffffff;
+  mix-blend-mode: difference;
+}
+
+/* ============================================================
+   GRID BACKGROUND (Micro-ISP template)
+   ============================================================ */
+
+.bg-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 50px 50px;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  mask-image: linear-gradient(to bottom, black 20%, transparent 80%);
+  z-index: -1;
+}
+
+/* ============================================================
+   MARQUEE ANIMATION
+   ============================================================ */
+
+.marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+  width: 100%;
+}
+
+/* Micro-ISP variant: rotated band */
+:root.tpl-micro-isp .marquee-container {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem 0;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  transform: rotate(-2deg) scale(1.05);
+  position: relative;
+  z-index: 10;
+}
+
+/* Agency variant: simple border */
+:root.tpl-agency .marquee-container {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 0;
+}
+
+.marquee-content {
+  display: flex;
+  animation: marquee 25s linear infinite;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ============================================================
+   TEXT UTILITIES
+   ============================================================ */
+
+@layer utilities {
+  .text-outline {
+    -webkit-text-stroke: 1px var(--color-text);
+    color: transparent;
+  }
+
+  .text-outline-accent {
+    -webkit-text-stroke: 1px var(--color-accent);
+    color: transparent;
+  }
+}
+
+.text-reveal-clip {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+/* ============================================================
+   DIAGONAL CLIP & STRIPES (Micro-ISP)
+   ============================================================ */
+
+.clip-diagonal {
+  clip-path: polygon(0 0, 100% 5%, 100% 100%, 0 95%);
+}
+
+.diagonal-stripes {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 4px,
+    rgba(255, 255, 255, 0.02) 4px,
+    rgba(255, 255, 255, 0.02) 8px
+  );
+}
+
+/* ============================================================
+   MESH & BLOB BACKGROUNDS (Micro-ISP)
+   ============================================================ */
+
+.bg-mesh-2 {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 80% 20%, rgba(var(--theme-accent-rgb), 0.08) 0%, transparent 50%),
+              radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.sui-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.4;
+  animation: sui-float 20s infinite ease-in-out alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.sui-blob-1 {
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(var(--theme-accent-rgb), 0.3) 0%, transparent 70%);
+  top: -10%;
+  left: -10%;
+}
+
+.sui-blob-2 {
+  width: 40vw;
+  height: 40vw;
+  background: radial-gradient(circle, rgba(0, 255, 204, 0.15) 0%, transparent 70%);
+  bottom: -10%;
+  right: -10%;
+  animation-delay: -5s;
+}
+
+@keyframes sui-float {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(10%, 15%) scale(1.2); }
+  66% { transform: translate(-5%, 10%) scale(0.8); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+/* ============================================================
+   FORM INPUTS (Micro-ISP)
+   ============================================================ */
+
+.form-input {
+  @apply w-full bg-transparent border-b border-white/20 py-3 text-white focus:outline-none focus:border-accent transition-colors rounded-none font-mono text-sm;
+}
+
+.form-label {
+  @apply text-xs font-mono text-gray-400 uppercase tracking-widest mb-1 block;
+}
+
+/* ============================================================
+   SVG ICON ANIMATION (Micro-ISP vital-svg)
+   ============================================================ */
+
+.vital-svg {
+  transition: all 0.5s ease;
+}
+
+.group:hover .vital-svg,
+.modal-active-svg .vital-svg {
+  color: rgba(var(--theme-accent-rgb), 0.15);
+}
+
+.group:hover .vital-svg .flow-line,
+.modal-active-svg .vital-svg .flow-line {
+  stroke-dasharray: 8 8;
+  animation: sap-flow 1.5s linear infinite;
+  stroke: rgba(var(--theme-accent-rgb), 0.6);
+  stroke-width: 2;
+}
+
+.group:hover .vital-svg .pulse-shape,
+.modal-active-svg .vital-svg .pulse-shape {
+  animation: sap-pulse 1.5s ease-in-out infinite alternate;
+  stroke: rgba(var(--theme-accent-rgb), 0.8);
+}
+
+@keyframes sap-flow {
+  from { stroke-dashoffset: 16; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes sap-pulse {
+  0% {
+    opacity: 0.4;
+    stroke-width: 1.5;
+    fill: transparent;
+  }
+  100% {
+    opacity: 1;
+    stroke-width: 3;
+    fill: rgba(var(--theme-accent-rgb), 0.15);
+    filter: drop-shadow(0 0 6px rgba(var(--theme-accent-rgb), 0.8));
+  }
+}
+
+/* ============================================================
+   COMIC TEMPLATE — Variables & Core Styles
+   ============================================================ */
+
+:root.tpl-comic {
+  --comic-yellow: #FFD60A;
+  --comic-red: #E63946;
+  --comic-blue: #457B9D;
+  --comic-black: #000000;
+  --comic-white: #FFFFFF;
+  --comic-cream: #FFFEF2;
+}
+
+/* Override body for comic template */
+:root.tpl-comic body {
+  background-color: #FFFFFF;
+  color: #000000;
+  font-family: 'Comic Neue', 'Segoe UI', system-ui, sans-serif;
+}
+
+/* Comic Fonts */
+.font-comic-title {
+  font-family: 'Bangers', 'Impact', 'Comic Neue', system-ui, sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.font-comic-body {
+  font-family: 'Comic Neue', 'Segoe UI', system-ui, sans-serif;
+}
+
+/* ─── Comic Panels ─── */
+.tpl-comic .comic-panel {
+  border: 4px solid #000;
+  background: #fff;
+  position: relative;
+}
+
+/* ─── Speech Bubbles ─── */
+.tpl-comic .comic-bubble {
+  background: #fff;
+  border: 3px solid #000;
+  border-radius: 2rem;
+  position: relative;
+  display: inline-block;
+}
+
+.tpl-comic .comic-bubble-bottom-left::after {
+  content: '';
+  position: absolute;
+  bottom: -16px;
+  left: 24px;
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 16px solid #000;
+}
+
+.tpl-comic .comic-bubble-bottom-left::before {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 26px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 14px solid #fff;
+  z-index: 1;
+}
+
+.tpl-comic .comic-bubble-bottom-right::after {
+  content: '';
+  position: absolute;
+  bottom: -16px;
+  right: 24px;
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 16px solid #000;
+}
+
+.tpl-comic .comic-bubble-bottom-right::before {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  right: 26px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 14px solid #fff;
+  z-index: 1;
+}
+
+/* ─── Action Burst — Star/Explosion shape ─── */
+.tpl-comic .comic-burst {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: var(--burst-color, var(--comic-yellow));
+  clip-path: polygon(
+    50% 0%, 61% 15%, 79% 2%, 74% 22%, 98% 19%, 83% 35%,
+    100% 50%, 83% 65%, 98% 81%, 74% 78%, 79% 98%, 61% 85%,
+    50% 100%, 39% 85%, 21% 98%, 26% 78%, 2% 81%, 17% 65%,
+    0% 50%, 17% 35%, 2% 19%, 26% 22%, 21% 2%, 39% 15%
+  );
+}
+
+.tpl-comic .comic-burst-text {
+  position: relative;
+  z-index: 1;
+  font-family: 'Bangers', 'Impact', system-ui, sans-serif;
+  font-weight: 700;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ─── Halftone Dot Pattern ─── */
+.tpl-comic .comic-halftone {
+  background-image: radial-gradient(circle, #000 1px, transparent 1px);
+  background-size: 6px 6px;
+  pointer-events: none;
+}
+
+/* ─── Speed Lines ─── */
+.tpl-comic .comic-speed-lines {
+  position: relative;
+  pointer-events: none;
+}
+
+.tpl-comic .comic-speed-line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, transparent 40%, #000 60%, #000 70%, transparent 100%);
+  transform-origin: 0% 50%;
+}
+
+/* ─── Text Shadows — Comic ink effect ─── */
+.tpl-comic .comic-text-shadow {
+  text-shadow:
+    3px 3px 0 rgba(0, 0, 0, 0.15),
+    -1px -1px 0 rgba(0, 0, 0, 0.05);
+}
+
+.tpl-comic .comic-text-shadow-red {
+  text-shadow:
+    3px 3px 0 rgba(230, 57, 70, 0.3),
+    -1px -1px 0 rgba(0, 0, 0, 0.05);
+}
+
+.tpl-comic .comic-text-shadow-white {
+  text-shadow:
+    3px 3px 0 rgba(255, 255, 255, 0.2),
+    -1px -1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.tpl-comic .comic-text-shadow-small {
+  text-shadow:
+    2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* ─── Comic Nav Links ─── */
+.tpl-comic .comic-nav-link {
+  font-family: 'Bangers', 'Impact', system-ui, sans-serif;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #000;
+  position: relative;
+  transition: color 0.2s;
+}
+
+.tpl-comic .comic-nav-link:hover {
+  color: var(--comic-red);
+}
+
+.tpl-comic .comic-nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: var(--comic-red);
+  transition: width 0.3s;
+}
+
+.tpl-comic .comic-nav-link:hover::after {
+  width: 100%;
+}
+
+/* ─── Comic Buttons ─── */
+.tpl-comic .comic-btn {
+  font-family: 'Bangers', 'Impact', system-ui, sans-serif;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.75rem 1.5rem;
+  border: 3px solid #000;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.tpl-comic .comic-btn-primary {
+  background: var(--comic-yellow);
+  color: #000;
+  box-shadow: 4px 4px 0 #000;
+}
+
+.tpl-comic .comic-btn-primary:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #000;
+}
+
+.tpl-comic .comic-btn-primary:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #000;
+}
+
+/* ─── Comic Form Inputs ─── */
+.tpl-comic .comic-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 3px solid #000;
+  background: #fff;
+  font-family: 'Comic Neue', system-ui, sans-serif;
+  font-size: 0.95rem;
+  color: #000;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.tpl-comic .comic-input:focus {
+  border-color: var(--comic-blue);
+  box-shadow: 3px 3px 0 var(--comic-blue);
+}
+
+/* ─── Comic Marquee Override ─── */
+:root.tpl-comic .marquee-container {
+  border: none;
+  padding: 0;
+  transform: none;
+  background: transparent;
+  color: inherit;
+}
+
+/* ─── Border utility ─── */
+.border-3 {
+  border-width: 3px;
+}
+
+/* ─── Comic scrollbar override ─── */
+:root.tpl-comic ::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+:root.tpl-comic ::-webkit-scrollbar-thumb {
+  background: #000;
+  border-radius: 0;
+}
+
+:root.tpl-comic ::-webkit-scrollbar-thumb:hover {
+  background: var(--comic-red);
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text);
+}
+
+/* ============================================================
+   SCREEN READER ONLY
+   ============================================================ */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.sr-only:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .marquee-content {
+    animation: none !important;
+  }
+
+  .custom-cursor {
+    display: none !important;
+  }
+
+  .sui-blob {
+    animation: none !important;
+  }
+}
+
+/* ============================================================
+   FOCUS VISIBLE
+   ============================================================ */
+
+:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+:root.tpl-comic :focus-visible {
+  outline: 3px solid var(--comic-red, #E63946);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   MARQUEE PAUSE ON HOVER/FOCUS — a11y
+   ============================================================ */
+
+.marquee-container:hover .marquee-content,
+.marquee-container:focus-within .marquee-content,
+.comic-marquee:hover .marquee-content,
+.comic-marquee:focus-within .marquee-content {
+  animation-play-state: paused;
+}
