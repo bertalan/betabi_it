@@ -289,12 +289,12 @@ export default function MicroIspTemplate() {
             <div className="lg:col-span-2">
               <h2 className="font-display text-4xl font-black uppercase tracking-tighter mb-6">{t.footer.title}</h2>
               <p className="font-mono text-sm text-gray-400 max-w-sm mb-8">{t.footer.desc}</p>
-              <a href="mailto:hello@betabi.it" className="inline-block font-display text-3xl md:text-5xl font-bold hover:text-accent transition-colors">hello@betabi.it</a>
+              <a href="mailto:posta@betabi.it" className="inline-block font-display text-3xl md:text-5xl font-bold hover:text-accent transition-colors">posta@betabi.it</a>
             </div>
             <div>
               <h4 className="font-mono text-xs uppercase tracking-widest text-gray-500 mb-6">{t.footer.hq}</h4>
               <address className="font-mono text-sm not-italic text-gray-300 space-y-2">
-                <p>Via dell'Innovazione, 42</p><p>20126 Milano, IT</p><p>P.IVA 12345678901</p>
+                <p>Via Rimini 6g</p><p>15048 Valenza (AL), IT</p><p>+39 347 806 3221</p>
               </address>
             </div>
             <div>

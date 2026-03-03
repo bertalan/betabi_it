@@ -290,14 +290,14 @@ const Footer = ({ onOpenContact }: { onOpenContact: () => void }) => {
         <div>
           <h4 className="font-sans font-bold text-sm uppercase tracking-widest text-accent mb-6">{t.footer.contact}</h4>
           <ul className="space-y-4 font-display text-xl tracking-tight">
-            <li><button onClick={onOpenContact} className="hover:text-accent transition-colors">hello@betabi.it</button></li>
-            <li>+39 012 345 6789</li>
-            <li className="text-muted">Milano, Italia</li>
+            <li><button onClick={onOpenContact} className="hover:text-accent transition-colors">posta@betabi.it</button></li>
+            <li><a href="tel:+393478063221" className="hover:text-accent transition-colors">+39 347 806 3221</a></li>
+            <li className="text-muted">Valenza (AL), Italia</li>
           </ul>
         </div>
       </div>
       <div className="pt-8 border-t border-muted/30 flex flex-col md:flex-row items-center justify-between gap-4 font-sans text-xs uppercase tracking-widest text-muted">
-        <p>&copy; {new Date().getFullYear()} Beta BI. P.IVA 12345678901.</p>
+        <p>&copy; {new Date().getFullYear()} Beta BI.</p>
         <div className="flex gap-8">
           <button onClick={() => window.dispatchEvent(new CustomEvent('open-legal', { detail: 'privacy' }))} className="hover:text-text transition-colors">{t.footer.privacy}</button>
           <button onClick={() => window.dispatchEvent(new CustomEvent('open-legal', { detail: 'cookie' }))} className="hover:text-text transition-colors">{t.footer.cookie}</button>
