@@ -73,7 +73,7 @@ export const en = {
     numbers: [
       { label: 'Uptime', value: '99.9%' },
       { label: 'Avg Latency', value: '< 10ms' },
-      { label: 'Active Clients', value: '250+' },
+      { label: 'Domains Served', value: '250+' },
       { label: 'Articles/Month', value: '10k+' }
     ]
   },

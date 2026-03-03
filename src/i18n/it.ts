@@ -73,7 +73,7 @@ export const it = {
     numbers: [
       { label: 'Uptime', value: '99.9%' },
       { label: 'Latenza Media', value: '< 10ms' },
-      { label: 'Clienti Attivi', value: '250+' },
+      { label: 'Domini Serviti', value: '250+' },
       { label: 'Articoli/Mese', value: '10k+' }
     ]
   },
