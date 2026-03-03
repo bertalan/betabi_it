@@ -804,13 +804,11 @@ const Footer = ({ onOpenContact }: { onOpenContact: () => void }) => {
       {/* Top marquee */}
       <div className="comic-marquee-footer border-y-3 border-white/20 py-3 mb-16 -mx-4 md:-mx-8 overflow-hidden">
         <div className="marquee-content">
-          {[...Array(4)].map((_, i) => (
-            <div key={i} className="flex items-center">
-              <span className="font-comic-title text-4xl md:text-5xl text-white mx-8">{t.footer.marquee1}</span>
+          {[...t.marquee, ...t.marquee].map((text, i) => (
+            <span key={i} className="flex items-center">
+              <span className="font-comic-title text-4xl md:text-5xl text-white mx-8">{text}</span>
               <span className="text-[var(--comic-yellow)] text-3xl">★</span>
-              <span className="font-comic-title text-4xl md:text-5xl text-[var(--comic-red)] mx-8">{t.footer.marquee2}</span>
-              <span className="text-[var(--comic-yellow)] text-3xl">★</span>
-            </div>
+            </span>
           ))}
         </div>
       </div>

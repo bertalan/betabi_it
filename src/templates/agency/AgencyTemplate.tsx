@@ -258,13 +258,11 @@ const Footer = ({ onOpenContact }: { onOpenContact: () => void }) => {
       <span className="absolute -right-20 -top-20 text-[40rem] font-serif leading-none text-muted/[0.04] pointer-events-none select-none" aria-hidden="true">β</span>
       <div className="marquee-container mb-32 -mx-6 md:-mx-12 border-y border-muted/20 py-4">
         <div className="marquee-content">
-          {[...Array(4)].map((_, i) => (
-            <div key={i} className="flex items-center">
-              <span className="text-4xl md:text-6xl font-display uppercase tracking-tighter mx-8 text-outline">{t.footer.marquee1}</span>
+          {[...t.marquee, ...t.marquee].map((text, i) => (
+            <span key={i} className="flex items-center">
+              <span className="text-4xl md:text-6xl font-display uppercase tracking-tighter mx-8 text-outline">{text}</span>
               <span className="text-accent text-4xl">✦</span>
-              <span className="text-4xl md:text-6xl font-display uppercase tracking-tighter mx-8">{t.footer.marquee2}</span>
-              <span className="text-accent text-4xl">✦</span>
-            </div>
+            </span>
           ))}
         </div>
       </div>
