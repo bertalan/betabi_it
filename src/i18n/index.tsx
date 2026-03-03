@@ -15,11 +15,21 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
+/** Detect language from browser, returning 'it' or 'en'. */
+function detectBrowserLang(): Language {
+  const raw = navigator.language || (navigator as any).userLanguage || '';
+  // Match 'it', 'it-IT', 'it-CH', etc.
+  if (raw.startsWith('it')) return 'it';
+  if (raw.startsWith('en')) return 'en';
+  // For any other language, default to English (international)
+  return 'en';
+}
+
 export const LanguageProvider = ({ children }: { children: React.ReactNode }) => {
   const [lang, setLangState] = useState<Language>(() => {
     return (localStorage.getItem('betabi_lang') as Language)
       || (import.meta.env.VITE_DEFAULT_LANG as Language)
-      || 'it';
+      || detectBrowserLang();
   });
 
   // Sync html lang attribute on initial mount
