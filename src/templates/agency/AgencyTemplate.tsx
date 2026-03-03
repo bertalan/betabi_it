@@ -179,7 +179,7 @@ const Portfolio = () => {
           <motion.div key={item.id} style={!isCards ? { y: index % 2 === 0 ? y1 : y2 } : undefined}
             className={`group cursor-pointer ${!isCards && index % 2 !== 0 ? 'md:mt-32' : ''}`} onClick={() => setSelectedProject(item)}
             role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedProject(item); } }}>
-            <div className={`relative overflow-hidden mb-4 md:mb-6 ${isCards ? 'aspect-video rounded-xl' : 'aspect-[3/4]'}`}>
+            <div className={`relative overflow-hidden mb-4 md:mb-6 ${isCards ? 'aspect-video rounded-xl' : 'aspect-[3/2]'}`}>
               <div className="absolute inset-0 bg-accent mix-blend-multiply opacity-0 group-hover:opacity-40 transition-opacity duration-500 z-10"></div>
               <img src={item.thumb} alt={item.client} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" referrerPolicy="no-referrer" loading="lazy" decoding="async" />
             </div>
