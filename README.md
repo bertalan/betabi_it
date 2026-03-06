@@ -121,7 +121,6 @@ The site is deployed as a static SPA on a bare-metal server (BT Panel / aapanel)
 - **HTTP/2**, gzip compression, immutable asset caching
 - Security headers (HSTS, X-Content-Type-Options, X-Frame-Options, Referrer-Policy)
 
-Deploy config: [`deploy/betabi.it.conf`](deploy/betabi.it.conf)
 
 ## License
 
